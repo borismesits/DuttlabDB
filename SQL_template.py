@@ -49,7 +49,7 @@ class Data:
         pass
 
 
-class SQL_template(SQL_abstract):
+class SQL_object(SQL_abstract):
     """
     This class interacts with the SQL DB, uploads to the DB, creates tables
     in the DB, and extracts information from the DB.
@@ -104,7 +104,7 @@ class SQL_template(SQL_abstract):
         content = []
         input = [name]
 
-        input_strings = [" data_id LIKE %s"]
+        input_strings = [" data_id LIKE %s", " and key = %s"]
         query = 'SELECT * FROM ' + self.TABLE_NAME + ' WHERE'
         val = True
         for i, j in enumerate(input):
@@ -145,5 +145,5 @@ class SQL_template(SQL_abstract):
 
 if __name__ == '__main__':
 
-    SQL = SQL_template()
+    SQL = SQL_object()
     SQL.create_table()
