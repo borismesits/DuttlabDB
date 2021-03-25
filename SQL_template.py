@@ -98,11 +98,11 @@ class SQL_object(SQL_abstract):
         """
 
         if (data_id != None):
-            name = data_id + '%'
+            default = data_id + '%'
         else:
-            name = None
+            default = None
         content = []
-        input = [name]
+        input = [default]
 
         input_strings = [" data_id LIKE %s", " and key = %s"]
         query = 'SELECT * FROM ' + self.TABLE_NAME + ' WHERE'
@@ -130,6 +130,15 @@ class SQL_object(SQL_abstract):
         data.data_id = [row[1] for row in raw]
 
         return data
+
+    def load(self, **kwargs):
+        '''
+        Access the data here. Note that extract is defined to have a decorator. After completing the extract method and
+        the decorator function, the result is passed through format for final adjustments.
+
+        Kwargs are the searchable parameters.
+        '''
+        return self.format(self.extract(**kwargs))
 
     def backup(self):
         folder = str(datetime.datetime.today().strftime("%Y-%m-%d"))
